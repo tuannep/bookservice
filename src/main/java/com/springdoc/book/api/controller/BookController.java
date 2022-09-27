@@ -28,9 +28,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-@CrossOrigin
 @RestController
-@RequestMapping("/api/books")
+//@RequestMapping("/api")
 public class BookController {
 	@Autowired
 	BookRepository bookRepository;
@@ -40,7 +39,7 @@ public class BookController {
 			@ApiResponse(responseCode = "200", description = "Successful operation", content = { @Content(mediaType = "application/xml", schema = @Schema(implementation = Book.class)), @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class)) }),
 			@ApiResponse(responseCode = "405", description = "Invalid input")
 	})
-	@PostMapping("/")
+	@PostMapping("/api/book")
 	public ResponseEntity<Book> createBook(@RequestBody Book book) {
 	    try {
 	    	Book _book = bookRepository
@@ -55,7 +54,7 @@ public class BookController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Book.class))))
 	})
-	@GetMapping("/")
+	@GetMapping("/api/books")
 	public ResponseEntity<List<Book>> getAllBooks() {
 	    try {
 	      List<Book> books = new ArrayList<Book>();
@@ -76,7 +75,7 @@ public class BookController {
 			@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Book.class))),
 			@ApiResponse(responseCode = "400", description = "Invalid ID supplied", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Book not found", content = @Content) })
-	@GetMapping("/{id}")
+	@GetMapping("/api/book/{id}")
 	public ResponseEntity<Book> getBookById(@PathVariable("id") long id) {
 	    Optional<Book> bookData = bookRepository.findById(id);
 	    if (bookData.isPresent()) {
